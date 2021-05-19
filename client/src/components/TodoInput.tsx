@@ -25,10 +25,10 @@ function TodoInput() {
       onChange={onInputChange}
       onKeyDown={(event: any) => {
         if (event.key === "Enter") {
-          if (todoName !== "") {
-            const newTodoName = todoName.trim();
+          const newTodoName = todoName.trim();
+          if (newTodoName !== "") {
             dispatch(
-              add({ id: getId(), name: todoName, state: TodoState.Planned })
+              add({ id: getId(), name: newTodoName, state: TodoState.Planned })
             );
             clearTextInput();
           }
