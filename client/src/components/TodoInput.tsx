@@ -19,21 +19,25 @@ function TodoInput() {
   };
 
   return (
-      <input className="new-todo"
-        value={todoName}
-        onChange={onInputChange}
-        onKeyDown={(event: any) => {
-          if (event.key === "Enter") {
+    <input
+      className="new-todo"
+      value={todoName}
+      onChange={onInputChange}
+      onKeyDown={(event: any) => {
+        if (event.key === "Enter") {
+          if (todoName !== "") {
+            const newTodoName = todoName.trim();
             dispatch(
               add({ id: getId(), name: todoName, state: TodoState.Planned })
             );
             clearTextInput();
           }
-        }}
-        placeholder="Type here"
-        type="text"
-        autoFocus
-      />
+        }
+      }}
+      placeholder="Type here"
+      type="text"
+      autoFocus
+    />
   );
 }
 
