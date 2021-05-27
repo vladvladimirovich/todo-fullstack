@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 
   const response = await todoHelpers.submitTodo(todo, Todo);
   if (response.ok) {
-    return res.status(200).send();
+    return res.status(200).json(response.value);
   }
   res.status(400).json({ error: response.error }).send();
 });
@@ -63,7 +63,12 @@ router.delete("/:todoId", async (req, res) => {
 
   const response = await todoHelpers.deleteTodo(ownerId, todoId, Todo);
   if (response.ok) {
-    return res.status(200).send();
+    const response = await todoHelpers.getTodos(ownerId, Todo);
+
+    if (response.ok) {
+      const todos = response.value;
+      return res.status(200).json(todos);
+    }
   }
   res.status(400).json({ error: response.error }).send();
 });
