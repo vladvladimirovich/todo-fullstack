@@ -1,8 +1,7 @@
 import ITodo from "../components/ITodo";
-import Todos from "../components/TodoList";
 import TodoState from "../components/TodoState";
 
-const URL = process.env.PUBLIC_URL;
+const URL = process.env.PUBLIC_URL || "http://localhost:5000/";
 
 const initialState: any = [];
 
@@ -60,12 +59,13 @@ function add(todo: ITodo) {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
+        credentials: "include",
         body: JSON.stringify(todo),
       });
 
       const newTodo = await response.json();
 
-      if (response.ok) {
+      if (response.status === 200) {
         dispatch({
           type: "todo/add",
           payload: newTodo,
@@ -83,6 +83,7 @@ function remove(id: String) {
     try {
       const response = await fetch(URL + "api/v1/todos/" + id, {
         method: "DELETE",
+        credentials: "include",
       });
 
       const todos = await response.json();
@@ -109,6 +110,7 @@ function toggle(id: String) {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
+        credentials: "include",
         body: JSON.stringify({ state: newState }),
       });
 
@@ -131,6 +133,7 @@ function markAll() {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
+        credentials: "include",
         body: JSON.stringify(state),
       });
       if (response.ok) {
@@ -152,6 +155,7 @@ function unmarkAll() {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
+        credentials: "include",
         body: JSON.stringify(state),
       });
       if (response.ok) {
@@ -163,13 +167,15 @@ function unmarkAll() {
   };
 }
 
-//GET TODO ITEMS FROM THE SERVER
+//GET ALL TODOS
 function fetchTodos() {
   try {
     return async function (dispatch: any) {
-      const response = await fetch(URL + "api/v1/todos");
-      const todos = await response.json();
-      if (response.ok) {
+      const response = await fetch(URL + "api/v1/todos/", {
+        credentials: "include",
+      });
+      if (response.status === 200) {
+        const todos = await response.json();
         dispatch({ type: "todo/fetchTodos", payload: Array.from(todos) });
       }
     };

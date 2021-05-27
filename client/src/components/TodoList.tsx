@@ -27,7 +27,6 @@ function Todos(props: any) {
     return false;
   });
 
-
   return (
     <ul className="todo-list">
       {filteredTodos.map((todo: ITodo) => (
@@ -41,7 +40,7 @@ function Todos(props: any) {
           }
           checked={todo.state === TodoState.Completed ? true : false}
         >
-          {todo.name}
+          {todo.label}
         </TodoItem>
       ))}
     </ul>

@@ -2,7 +2,7 @@ import TodoState from "./TodoState";
 
 interface ITodo {
   id: String;
-  name: String;
+  label: String;
   state: TodoState;
 }
 

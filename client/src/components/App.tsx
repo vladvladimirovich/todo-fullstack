@@ -1,34 +1,41 @@
-import TodoList from "./TodoList";
-import TodoInput from "./TodoInput";
-import TodoFilter from "./TodoFilter";
-import TodoCounts from "./TodoCount";
-import ToggleAll from "./ToggleAll";
 import { fetchTodos } from "../store/TodosSlice";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+} from "react-router-dom";
+import TodoApp from "./TodoApp";
+import Login from "./Login";
+import Register from "./Register";
+import UnauthenticatedRoute from "./UnauthenticatedRoute";
+import AuthenticatedRoute from "./AuthenticatedRoute";
+import { saveAuthState } from "../store/AuthActions";
+import Loading from "./Loading";
 
 function App() {
+  console.log("app");
   const dispatch = useDispatch();
+  const loading = useSelector((state: any) => state.auth);
+
   useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+    dispatch(saveAuthState()); 
+  },[dispatch]);
+
   return (
-    <section className="todoapp">
-      <header className="header">
-        <h1>Todos</h1>
-        <TodoInput />
-      </header>
-
-      <section className="main">
-        <ToggleAll />
-        <TodoList />
-      </section>
-
-      <footer className="footer">
-        <TodoFilter></TodoFilter>
-        <TodoCounts></TodoCounts>
-      </footer>
-    </section>
+    <>
+      {loading.loading ? (
+        <Loading />
+      ) : (
+        <Router>
+          <Switch>
+            <AuthenticatedRoute component={TodoApp} path="/todo" />
+            <UnauthenticatedRoute component={Login} path="/login" />
+            <UnauthenticatedRoute component={Register} path="/register" />
+          </Switch>
+        </Router>
+      )}
+    </>
   );
 }
 export default App;

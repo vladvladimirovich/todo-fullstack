@@ -8,27 +8,27 @@ function getId() {
 }
 
 function TodoInput() {
-  const [todoName, setTodoName] = useState("");
+  const [todoLabel, setTodoLabel] = useState("");
   const dispatch = useDispatch();
   const onInputChange = (event: any) => {
-    setTodoName(event.target.value);
+    setTodoLabel(event.target.value);
   };
 
   const clearTextInput = () => {
-    setTodoName("");
+    setTodoLabel("");
   };
 
   return (
     <input
       className="new-todo"
-      value={todoName}
+      value={todoLabel}
       onChange={onInputChange}
       onKeyDown={(event: any) => {
         if (event.key === "Enter") {
-          const newTodoName = todoName.trim();
-          if (newTodoName !== "") {
+          const newTodoLabel = todoLabel.trim();
+          if (newTodoLabel !== "") {
             dispatch(
-              add({ id: getId(), name: newTodoName, state: TodoState.Planned })
+              add({ id: getId(), label: newTodoLabel, state: TodoState.Planned })
             );
             clearTextInput();
           }
