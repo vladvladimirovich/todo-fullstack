@@ -33,7 +33,7 @@ app.use(express.json());
 app.use("/api/v1/todos", verify, todosRoute);
 app.use("/api/v1/users", usersRoute);
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" || true) {
   app.use(express.static("client/build/"));
 
   app.get("*", (req, res) => {
