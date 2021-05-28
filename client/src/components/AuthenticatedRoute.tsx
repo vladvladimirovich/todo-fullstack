@@ -1,7 +1,5 @@
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { saveAuthState } from "../store/AuthActions";
 
 const RouteAuthenticated = ({ component: Component, path }: RouteProps) => {
 

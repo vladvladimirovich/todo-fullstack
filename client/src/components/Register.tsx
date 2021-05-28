@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { registerUser } from "../store/AuthActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Register() {
   const [loginString, setLoginString] = useState("");

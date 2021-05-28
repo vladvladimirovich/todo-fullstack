@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../store/AuthActions";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { saveAuthState } from "../store/AuthActions";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 function Login() {
   const [loginString, setLoginString] = useState("");
   const [passwordString, setPasswordString] = useState("");

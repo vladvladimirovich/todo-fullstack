@@ -13,14 +13,8 @@ const path = require("path");
 const todosRoute = require("./routes/todos");
 const usersRoute = require("./routes/users");
 
-//middleware
 const { verify } = require("./middeleware/verify");
-// app.use(cors());
-// Add Access Control Allow Origin headers
-// app.options('/api/v1/todos', (req, res, next) => {
-//   console.log(123, req.cookies);
-//   next()
-// })
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", true);

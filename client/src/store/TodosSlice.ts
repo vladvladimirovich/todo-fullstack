@@ -1,11 +1,9 @@
-import { SchemaDefinition } from "mongoose";
 import ITodo from "../components/ITodo";
 import TodoState from "../components/TodoState";
 
 const URL = process.env.PUBLIC_URL || "http://localhost:5000/";
 
 const initialState: any = [];
-
 
 //REDUCERS
 function todoReducer(state = initialState, action: any) {
@@ -24,7 +22,7 @@ function todoReducer(state = initialState, action: any) {
       });
     }
     case "todo/add": {
-      console.log("Todo reducer")
+      console.log("Todo reducer");
       const newState = state.concat(action.payload);
       return newState;
     }
@@ -62,11 +60,11 @@ function add(todo: ITodo) {
         credentials: "include",
         body: JSON.stringify(todo),
       });
-     
+
       const newTodo = await response.json();
       console.log(await newTodo);
-      
-      console.log("Add action")
+
+      console.log("Add action");
       if (response.status === 200) {
         dispatch({
           type: "todo/add",
@@ -87,8 +85,7 @@ function remove(id: String) {
         method: "DELETE",
         credentials: "include",
       });
-      
-      
+
       if (response.ok) {
         const todos = await response.json();
         dispatch({ type: "todo/fetchTodos", payload: Array.from(todos) });
@@ -171,19 +168,15 @@ function unmarkAll() {
 
 //GET ALL TODOS
 function fetchTodos() {
-  try {
-    return async function (dispatch: any) {
-      const response = await fetch(URL + "api/v1/todos/", {
-        credentials: "include",
-      });
-      if (response.status === 200) {
-        const todos = await response.json();
-        dispatch({ type: "todo/fetchTodos", payload: Array.from(todos) });
-      }
-    };
-  } catch (err) {
-    console.log();
-  }
+  return async function (dispatch: any) {
+    const response = await fetch(URL + "api/v1/todos/", {
+      credentials: "include",
+    });
+    if (response.status === 200) {
+      const todos = await response.json();
+      dispatch({ type: "todo/fetchTodos", payload: Array.from(todos) });
+    }
+  };
 }
 
 export { fetchTodos, add, remove, toggle, markAll, unmarkAll };
