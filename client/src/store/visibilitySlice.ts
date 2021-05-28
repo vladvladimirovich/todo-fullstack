@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Visibility from "./Visibility";
+
+
+export enum Visibility {
+  All,
+  Completed,
+  Planned
+}
 
 const initialState = Visibility.All;
 

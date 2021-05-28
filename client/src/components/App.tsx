@@ -9,13 +9,14 @@ import Login from "./Login";
 import Register from "./Register";
 import UnauthenticatedRoute from "./UnauthenticatedRoute";
 import AuthenticatedRoute from "./AuthenticatedRoute";
-import { saveAuthState } from "../store/AuthActions";
+import { saveAuthState } from "../store/authActions";
 import Loading from "./Loading";
+import { RootState } from "../store/store";
 
 function App() {
   console.log("app");
   const dispatch = useDispatch();
-  const loading = useSelector((state: any) => state.auth);
+  const loading = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     dispatch(saveAuthState()); 

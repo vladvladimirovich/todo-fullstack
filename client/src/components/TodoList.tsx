@@ -1,15 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import TodoItem from "./TodoItem";
-import ITodo from "./ITodo";
-import TodoState from "./TodoState";
-import { remove, toggle } from "../store/TodosSlice";
-import Visibility from "../store/Visibility";
+import { ITodo } from "../store/todosSlice";
+import { remove, toggle, TodoState } from "../store/todosSlice";
+import { Visibility } from "../store/visibilitySlice";
 import "../css/index.css";
+import { useAppSelector } from "../store/hooks";
+import { RootState } from "../store/store";
 
-function Todos(props: any) {
-  const todos = useSelector((state: any) => state.todos);
+function Todos() {
+  const todos = useAppSelector((state: RootState) => state.todos);
+  const visibility = useAppSelector((state: RootState) => state.visibility);
   const dispatch = useDispatch();
-  const visibility = useSelector((state: any) => state.visibility);
 
   const filteredTodos = todos.filter((todo: ITodo) => {
     if (
@@ -31,7 +32,6 @@ function Todos(props: any) {
     <ul className="todo-list">
       {filteredTodos.map((todo: ITodo) => (
         <TodoItem
-          todoState={todo.state}
           key={todo.id}
           onRemove={() => dispatch(remove(todo.id))}
           onToggle={() => dispatch(toggle(todo.id))}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { markAll, unmarkAll } from "../store/TodosSlice";
+import { markAll, unmarkAll } from "../store/todosSlice";
 
 function ToggleAll() {
     const dispatch = useDispatch();

@@ -1,12 +1,26 @@
-import ITodo from "../components/ITodo";
-import TodoState from "../components/TodoState";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "./store";
 
 const URL = process.env.PUBLIC_URL || "http://localhost:5000/";
 
-const initialState: any = [];
+export enum TodoState {
+  Planned,
+  Completed,
+}
+
+export interface ITodo {
+  id: string;
+  label: string;
+  state: TodoState;
+}
+
+const initialState: Array<ITodo> = [];
 
 //REDUCERS
-function todoReducer(state = initialState, action: any) {
+function todoReducer(
+  state: Array<ITodo> = initialState,
+  action: PayloadAction<ITodo | Array<ITodo> | String>
+) {
   const type = action.type;
   switch (type) {
     case "todo/markAll": {
@@ -22,26 +36,27 @@ function todoReducer(state = initialState, action: any) {
       });
     }
     case "todo/add": {
-      console.log("Todo reducer");
-      const newState = state.concat(action.payload);
+      const newState = state.concat(action.payload as ITodo);
       return newState;
     }
     case "todo/remove": {
       return state.filter((todo: ITodo) => action.payload !== todo.id);
     }
     case "todo/toggle": {
-      const id = action.payload.id;
-      const newState = action.payload.state;
+      const todo : ITodo = action.payload as ITodo;  
+      const id : String = todo.id;
+      const todoState : TodoState = todo.state;
       return state.map((todo: ITodo) => {
         const newTodo = { ...todo };
         if (id === todo.id) {
-          newTodo.state = newState;
+          newTodo.state = todoState;
         }
         return newTodo;
       });
     }
     case "todo/fetchTodos": {
-      return [...action.payload];
+      const todos : Array<ITodo> = action.payload as Array<ITodo>;
+      return todos;
     }
     default:
       return state;
@@ -50,7 +65,7 @@ function todoReducer(state = initialState, action: any) {
 
 //ADD TODO ITEM
 function add(todo: ITodo) {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     try {
       const response = await fetch(URL + "/api/v1/todos", {
         method: "POST",
@@ -79,7 +94,7 @@ function add(todo: ITodo) {
 
 //REMOVE TODO ITEM BY ID
 function remove(id: String) {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     try {
       const response = await fetch(URL + "/api/v1/todos/" + id, {
         method: "DELETE",
@@ -98,7 +113,8 @@ function remove(id: String) {
 
 //TOGGLE TODO ITEM BY ID
 function toggle(id: String) {
-  return async function (dispatch: any, getState: any) {
+  return async function (dispatch: AppDispatch, getState: any) {
+    console.log("GET STATE IS", typeof(getState));
     const todos = getState().todos;
     const state = todos.find((todo: ITodo) => todo.id === id).state;
 
@@ -124,7 +140,7 @@ function toggle(id: String) {
 
 //MARK ALL ITEMS
 function markAll() {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     const state = { state: 1 };
     try {
       const response = await fetch(URL + "/api/v1/todos/", {
@@ -146,7 +162,7 @@ function markAll() {
 
 //UNMARK ALL ITEMS
 function unmarkAll() {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     const state = { state: 0 };
     try {
       const response = await fetch(URL + "/api/v1/todos/", {
@@ -168,7 +184,7 @@ function unmarkAll() {
 
 //GET ALL TODOS
 function fetchTodos() {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     const response = await fetch(URL + "/api/v1/todos/", {
       credentials: "include",
     });

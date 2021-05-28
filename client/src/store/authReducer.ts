@@ -1,25 +1,28 @@
-const initialState = {authorized: false, loading: true};
+import { PayloadAction } from "@reduxjs/toolkit";
 
-function AuthReducer (state = initialState, action: any) { 
+interface AuthState {
+    authorized: boolean,
+    loading: boolean,
+}
+const initialState : AuthState = {authorized: false, loading: true};
+
+function AuthReducer (state = initialState, action: PayloadAction<boolean>) { 
     //console.log('auth', action)
     switch(action.type) {
 
 
         case "auth/setTrue":
-            console.log("set true");
             return {
                 ...state,
                 authorized: true
             };
         case "auth/setFalse":
-            console.log("set false");
             return {
                 ...state,
                 authorized: false
             };
 
             case "auth/loading":
-                console.log('auth', action)
                 return {
                     ...state,
                     loading: action.payload

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { registerUser } from "../store/AuthActions";
+import { registerUser } from "../store/authActions";
 import { useDispatch } from "react-redux";
 
 function Register() {
   const [loginString, setLoginString] = useState("");
   const [passwordString, setPasswordString] = useState("");
 
-  const onLoginChange = (event: any) => {
+  const onLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginString(event.target.value);
   };
-  const onPasswordChange = (event: any) => {
+  const onPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordString(event.target.value);
   };
   const dispatch = useDispatch();

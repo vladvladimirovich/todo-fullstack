@@ -3,12 +3,14 @@ import TodoInput from "./TodoInput";
 import TodoFilter from "./TodoFilter";
 import TodoCounts from "./TodoCount";
 import ToggleAll from "./ToggleAll";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchTodos } from "../store/TodosSlice";
+import { fetchTodos } from "../store/todosSlice";
+import { RootState } from "../store/store";
+import { useAppSelector } from "../store/hooks";
 
 function TodoApp() {
-  const loading = useSelector((state: any) => state.auth);
+  const loading = useAppSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!loading.loading) {

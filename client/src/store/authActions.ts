@@ -1,11 +1,10 @@
-const URL = process.env.PUBLIC_URL || "http://localhost:5000";
+import { AppDispatch } from "./store";
 
-console.log("URL:", URL);
-console.log("Public URL", process.env.PUBLIC_URL);
+const URL = process.env.PUBLIC_URL || "http://localhost:5000";
 
 // VERIFY USER
 function saveAuthState() {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     dispatch({ type: "auth/loading", payload: true });
     const response = await fetch(URL + "/api/v1/users/verify", {
       method: "GET",
@@ -24,7 +23,7 @@ function saveAuthState() {
 
 // LOGIN
 function loginUser(username: string, password: string) {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     const response = await fetch(URL + "/api/v1/users/login", {
       method: "POST",
       headers: {
@@ -41,7 +40,7 @@ function loginUser(username: string, password: string) {
 
 // REGISTRATION
 function registerUser(username: string, password: string) {
-  return async function (dispatch: any) {
+  return async function (dispatch: AppDispatch) {
     const response = await fetch(URL + "/api/v1/users/reg", {
       method: "POST",
       headers: {

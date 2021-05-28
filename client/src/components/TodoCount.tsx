@@ -1,8 +1,9 @@
-import {useSelector} from 'react-redux';
+import { useAppSelector } from '../store/hooks';
+import { RootState } from '../store/store';
 
 function TodoCounts() {
 
-    const count = (useSelector((state: any) => state.todos.length));
+    const count = (useAppSelector((state: RootState) => state.todos.length));
 
   return (
     <span className="todo-count">

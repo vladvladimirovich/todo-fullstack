@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { all, planned, completed } from "../store/VisibilitySlice";
+import { all, planned, completed } from "../store/visibilitySlice";
 
 function TodoFilter() {
   const [select, setSelect] = useState(0);

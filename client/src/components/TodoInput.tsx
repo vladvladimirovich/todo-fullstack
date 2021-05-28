@@ -1,7 +1,8 @@
 import { useState } from "react";
-import TodoState from "../components/TodoState";
+import { TodoState } from "../store/todosSlice";
 import { useDispatch } from "react-redux";
-import { add } from "../store/TodosSlice";
+import { add } from "../store/todosSlice";
+import { ITodo } from "../store/todosSlice";
 
 function getId() {
   return new Date().getTime().toString();
@@ -10,7 +11,7 @@ function getId() {
 function TodoInput() {
   const [todoLabel, setTodoLabel] = useState("");
   const dispatch = useDispatch();
-  const onInputChange = (event: any) => {
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoLabel(event.target.value);
   };
 
@@ -23,15 +24,18 @@ function TodoInput() {
       className="new-todo"
       value={todoLabel}
       onChange={onInputChange}
-      onKeyDown={(event: any) => {
+      onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
           const newTodoLabel = todoLabel.trim();
           if (newTodoLabel !== "") {
-            dispatch(
-              add({ id: getId(), label: newTodoLabel, state: TodoState.Planned })
-            );
-            clearTextInput();
+            const newTodo: ITodo = {
+              id: getId(),
+              label: newTodoLabel,
+              state: TodoState.Planned,
+            };
+            dispatch(add(newTodo));
           }
+          clearTextInput();
         }
       }}
       placeholder="Type here"
