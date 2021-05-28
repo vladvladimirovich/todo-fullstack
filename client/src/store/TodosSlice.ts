@@ -52,7 +52,7 @@ function todoReducer(state = initialState, action: any) {
 function add(todo: ITodo) {
   return async function (dispatch: any) {
     try {
-      const response = await fetch(URL + "api/v1/todos", {
+      const response = await fetch(URL + "/api/v1/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -81,7 +81,7 @@ function add(todo: ITodo) {
 function remove(id: String) {
   return async function (dispatch: any) {
     try {
-      const response = await fetch(URL + "api/v1/todos/" + id, {
+      const response = await fetch(URL + "/api/v1/todos/" + id, {
         method: "DELETE",
         credentials: "include",
       });
@@ -104,7 +104,7 @@ function toggle(id: String) {
 
     const newState = state === TodoState.Completed ? 0 : 1;
     try {
-      const response = await fetch(URL + "api/v1/todos/" + id, {
+      const response = await fetch(URL + "/api/v1/todos/" + id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -127,7 +127,7 @@ function markAll() {
   return async function (dispatch: any) {
     const state = { state: 1 };
     try {
-      const response = await fetch(URL + "api/v1/todos/", {
+      const response = await fetch(URL + "/api/v1/todos/", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -149,7 +149,7 @@ function unmarkAll() {
   return async function (dispatch: any) {
     const state = { state: 0 };
     try {
-      const response = await fetch(URL + "api/v1/todos/", {
+      const response = await fetch(URL + "/api/v1/todos/", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -169,7 +169,7 @@ function unmarkAll() {
 //GET ALL TODOS
 function fetchTodos() {
   return async function (dispatch: any) {
-    const response = await fetch(URL + "api/v1/todos/", {
+    const response = await fetch(URL + "/api/v1/todos/", {
       credentials: "include",
     });
     if (response.status === 200) {

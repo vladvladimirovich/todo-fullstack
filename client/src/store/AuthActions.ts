@@ -7,7 +7,7 @@ console.log("Public URL", process.env.PUBLIC_URL);
 function saveAuthState() {
   return async function (dispatch: any) {
     dispatch({ type: "auth/loading", payload: true });
-    const response = await fetch(URL + "api/v1/users/verify", {
+    const response = await fetch(URL + "/api/v1/users/verify", {
       method: "GET",
       credentials: "include",
     });
@@ -25,7 +25,7 @@ function saveAuthState() {
 // LOGIN
 function loginUser(username: string, password: string) {
   return async function (dispatch: any) {
-    const response = await fetch(URL + "api/v1/users/login", {
+    const response = await fetch(URL + "/api/v1/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -42,7 +42,7 @@ function loginUser(username: string, password: string) {
 // REGISTRATION
 function registerUser(username: string, password: string) {
   return async function (dispatch: any) {
-    const response = await fetch(URL + "api/v1/users/reg", {
+    const response = await fetch(URL + "/api/v1/users/reg", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -51,7 +51,7 @@ function registerUser(username: string, password: string) {
       body: JSON.stringify({ username: username, password: password }),
     });
     if (response.status === 200) {
-      dispatch({type: "auth/setTrue"})
+      dispatch({ type: "auth/setTrue" });
     }
   };
 }
