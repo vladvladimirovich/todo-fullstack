@@ -1,4 +1,7 @@
-const URL = process.env.PUBLIC_URL || "http://localhost:5000/";
+const URL = process.env.PUBLIC_URL || "http://localhost:5000";
+
+console.log("URL:", URL);
+console.log("Public URL", process.env.PUBLIC_URL);
 
 // VERIFY USER
 function saveAuthState() {
